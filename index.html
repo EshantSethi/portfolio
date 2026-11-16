@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eshant Sethi | Java Backend Developer</title>
+  <meta name="description" content="Portfolio of Eshant Sethi - Final-year B.Tech CSE student at SRMIST building backend services with Java and Spring Boot." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2338bdf8'/><text x='50' y='68' font-size='50' text-anchor='middle' font-family='Arial' font-weight='bold' fill='%230b1120'>ES</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <script>document.documentElement.classList.add("js");</script>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --bg-2: #111a2e;
+      --card: #151f36;
+      --border: #24304d;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #818cf8;
+      --green: #4ade80;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    /* Scroll progress bar */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 50;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    /* Navbar */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { font-weight: 800; font-size: 1.2rem; color: var(--text); }
+    .logo:hover { text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { position: relative; color: var(--muted); font-size: 0.95rem; font-weight: 500; padding: 4px 0; transition: color 0.2s; }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%;
+      background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); text-decoration: none; }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.6rem; cursor: pointer; }
+
+    /* Hero */
+    .hero { padding: 100px 0 80px; }
+    .hero .hi { color: var(--accent); font-size: 1rem; margin-bottom: 12px; }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; }
+    .hero h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem); font-weight: 700; margin-top: 8px; min-height: 1.3em;
+    }
+    .typed {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .cursor { color: var(--accent); font-weight: 400; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hero p { color: var(--muted); max-width: 620px; margin-top: 20px; font-size: 1.05rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .badge {
+      font-size: 0.85rem; padding: 6px 12px; border-radius: 999px;
+      background: var(--bg-2); border: 1px solid var(--border); color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .badge:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .badge b { color: var(--green); }
+    .btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+
+    /* Buttons: lift, glow, press, ripple */
+    .btn {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 1rem; font-family: inherit;
+      border: 1px solid var(--accent); cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35); }
+    .btn:active { transform: translateY(1px) scale(0.98); box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25); }
+    .btn-primary { background: var(--accent); color: #0b1120; }
+    .btn-primary:hover { background: #7dd3fc; }
+    .btn-outline { background: transparent; color: var(--accent); }
+    .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+    .btn .arrow { transition: transform 0.2s ease; }
+    .btn:hover .arrow { transform: translateX(4px); }
+    .btn:hover .arrow.down { transform: translateY(3px); }
+    .ripple {
+      position: absolute; border-radius: 50%; transform: scale(0); pointer-events: none;
+      background: rgba(255, 255, 255, 0.45); animation: ripple 0.6s ease-out;
+    }
+    @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+    /* Sections */
+    section { padding: 70px 0; scroll-margin-top: 64px; }
+    .section-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+    .section-title .num { color: var(--accent); font-size: 1.1rem; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+
+    /* Scroll reveal (only hides content when JS is running) */
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .js .reveal.in { opacity: 1; transform: none; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+    .about-grid p { color: var(--muted); margin-bottom: 14px; }
+    .about-grid p strong { color: var(--text); }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat { text-align: center; padding: 18px 10px; }
+    .stat .big { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .stat .small { font-size: 0.85rem; color: var(--muted); }
+
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .skills-grid h3 { font-size: 1rem; margin-bottom: 12px; color: var(--accent); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 0.82rem; padding: 4px 10px; border-radius: 6px; cursor: default;
+      background: rgba(56, 189, 248, 0.08); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: transform 0.15s ease, background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .tag:hover { transform: scale(1.08); background: var(--accent); color: #0b1120; border-color: var(--accent); }
+
+    /* Projects */
+    .projects { display: grid; gap: 24px; }
+    .project { transform-style: preserve-3d; will-change: transform; }
+    .project:hover { transform: none; }
+    .project-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .project h3 { font-size: 1.35rem; }
+    .project .sub { color: var(--muted); font-size: 0.95rem; margin-top: 2px; }
+    .project-links { display: flex; gap: 10px; }
+    .project-links a {
+      font-size: 0.85rem; padding: 6px 12px; border-radius: 8px;
+      border: 1px solid var(--border); color: var(--text); transition: 0.2s;
+    }
+    .project-links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; transform: translateY(-2px); }
+    .project ul { margin: 16px 0 16px 20px; color: var(--muted); }
+    .project li { margin-bottom: 8px; }
+    .project li b { color: var(--text); }
+    .highlight-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .hl {
+      font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 8px;
+      background: rgba(74, 222, 128, 0.1); color: var(--green); border: 1px solid rgba(74, 222, 128, 0.25);
+    }
+
+    /* Project story */
+    .story-btn {
+      margin-top: 18px; background: transparent; color: var(--accent); font-family: inherit;
+      border: 1px dashed var(--accent); border-radius: 8px; padding: 8px 14px; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s;
+    }
+    .story-btn:hover { background: rgba(56, 189, 248, 0.1); transform: translateY(-2px); }
+    .story-btn:active { transform: scale(0.97); }
+    .story-btn .chev { display: inline-block; transition: transform 0.3s ease; }
+    .story-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .story { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s ease; }
+    .story.open { grid-template-rows: 1fr; }
+    .story > .story-inner { overflow: hidden; }
+    .story-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px;
+      padding-top: 18px; border-top: 1px dashed var(--border);
+    }
+    .story-block h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; }
+    .story-block p, .story-block li { color: var(--muted); font-size: 0.95rem; }
+    .story-block ul { margin: 0 0 0 18px; }
+    .story-block b { color: var(--text); }
+    .flow { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .flow .node {
+      font-family: "JetBrains Mono", monospace; font-size: 0.8rem; padding: 6px 10px; border-radius: 8px;
+      background: var(--bg-2); border: 1px solid var(--border); color: var(--text); transition: 0.2s;
+    }
+    .flow .node:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .flow .node.hot { border-color: rgba(74, 222, 128, 0.5); color: var(--green); }
+    .flow .to { color: var(--muted); }
+
+    /* Timeline */
+    .timeline { display: grid; gap: 18px; }
+    .t-item { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .t-item h3 { font-size: 1.1rem; }
+    .t-item .org { color: var(--accent); font-weight: 500; }
+    .t-item .date { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+    .t-item ul { margin: 10px 0 0 20px; color: var(--muted); width: 100%; }
+
+    /* Certifications */
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .cert .icon { font-size: 1.6rem; margin-bottom: 8px; display: inline-block; transition: transform 0.3s ease; }
+    .cert:hover .icon { transform: scale(1.2) rotate(-8deg); }
+    .cert h3 { font-size: 1rem; }
+    .cert p { color: var(--muted); font-size: 0.88rem; margin-top: 4px; }
+    .pub { margin-top: 20px; }
+    .pub p { color: var(--muted); margin-top: 6px; }
+
+    /* Contact */
+    .contact { text-align: center; }
+    .contact p { color: var(--muted); max-width: 540px; margin: 0 auto 28px; }
+    .contact .btns { justify-content: center; }
+    .copy-note { margin-top: 14px; font-size: 0.9rem; color: var(--green); min-height: 1.4em; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
+      color: var(--muted); font-size: 0.88rem;
+    }
+    footer .cloud { color: var(--accent); }
+
+    /* Back to top */
+    #toTop {
+      position: fixed; right: 20px; bottom: 20px; z-index: 20;
+      width: 46px; height: 46px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+      background: var(--accent); color: #0b1120; border: none;
+      opacity: 0; transform: translateY(20px); pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s, box-shadow 0.2s;
+    }
+    #toTop.show { opacity: 1; transform: none; pointer-events: auto; }
+    #toTop:hover { box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45); transform: translateY(-3px); }
+
+    /* Mobile */
+    @media (max-width: 760px) {
+      .menu-btn { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 64px; left: 0; right: 0;
+        flex-direction: column; gap: 0; background: var(--bg-2); border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li a { display: block; padding: 14px 20px; }
+      .nav-links a::after { display: none; }
+      .about-grid, .story-grid { grid-template-columns: 1fr; }
+      .hero { padding: 64px 0 50px; }
+      .hero h2 { min-height: 2.6em; }
+      section { padding: 50px 0; }
+    }
+
+    /* Respect "reduce motion" */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">Eshant<span>.</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <p class="hi mono">Hi, my name is</p>
+      <h1>Eshant Sethi</h1>
+      <h2>I build <span class="typed" id="typed">backend services with Java &amp; Spring Boot.</span><span class="cursor" aria-hidden="true">|</span></h2>
+      <p>
+        Final-year B.Tech CSE student at SRM Institute of Science and Technology. I build, test and ship
+        backend services: REST APIs, databases, caching, rate limiting and AI/RAG systems.
+      </p>
+      <div class="badges">
+        <span class="badge"><b>●</b> Open to SDE roles</span>
+        <span class="badge">📍 Chennai, India</span>
+        <span class="badge">☁️ AWS Certified CloudOps – Associate</span>
+      </div>
+      <div class="btns">
+        <a href="#projects" class="btn btn-primary">View My Projects <span class="arrow">→</span></a>
+        <a href="Eshant_Sethi_Resume.pdf" download class="btn btn-outline">Download Resume <span class="arrow down">↓</span></a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- About -->
+    <section id="about">
+      <div class="container reveal">
+        <h2 class="section-title"><span class="num mono">01.</span> About Me</h2>
+        <div class="about-grid">
+          <div>
+            <p>
+              I'm a final-year <strong>Computer Science</strong> student at <strong>SRMIST, Kattankulathur</strong>
+              (graduating May 2027). I mainly work with <strong>Java 21</strong> and <strong>Spring Boot 3.x</strong>.
+            </p>
+            <p>
+              I built and run <strong>Shortly</strong>, a live URL shortener with PostgreSQL and Redis caching that cuts
+              database reads by about 70%. I also built <strong>InsightRAG</strong>, a RAG backend in Java with hybrid search
+              and 33 JUnit tests.
+            </p>
+            <p>
+              I'm strong in <strong>DSA, OOP and REST API design</strong>, and I enjoy finding the root cause of tricky
+              bugs like race conditions.
+            </p>
+          </div>
+          <div class="stats">
+            <div class="card stat"><div class="big" data-count="8.67" data-decimals="2">8.67</div><div class="small">CGPA / 10</div></div>
+            <div class="card stat"><div class="big" data-count="70" data-prefix="~" data-suffix="%">~70%</div><div class="small">Fewer DB reads (Shortly)</div></div>
+            <div class="card stat"><div class="big" data-count="33">33</div><div class="small">JUnit tests (InsightRAG)</div></div>
+            <div class="card stat"><div class="big" data-count="5" data-suffix="+">5+</div><div class="small">Certifications</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="container reveal">
+        <h2 class="section-title"><span class="num mono">02.</span> Skills</h2>
+        <div class="skills-grid">
+          <div class="card">
+            <h3>Languages &amp; Spring</h3>
+            <div class="tags">
+              <span class="tag">Java (Primary)</span><span class="tag">SQL</span>
+              <span class="tag">Spring Boot 3.x</span><span class="tag">Spring MVC</span>
+              <span class="tag">Spring Security</span><span class="tag">Spring Data JPA</span>
+              <span class="tag">Hibernate</span><span class="tag">Maven</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>APIs</h3>
+            <div class="tags">
+              <span class="tag">REST API Design</span><span class="tag">Swagger / OpenAPI</span>
+              <span class="tag">Exception Handling</span><span class="tag">CORS</span>
+              <span class="tag">Rate Limiting</span><span class="tag">Caching</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Databases</h3>
+            <div class="tags">
+              <span class="tag">PostgreSQL</span><span class="tag">pgvector</span>
+              <span class="tag">MySQL</span><span class="tag">SQL Server</span>
+              <span class="tag">Redis</span><span class="tag">H2</span>
+              <span class="tag">Indexing</span><span class="tag">Query Optimization</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Cloud &amp; DevOps</h3>
+            <div class="tags">
+              <span class="tag">AWS</span><span class="tag">Azure</span>
+              <span class="tag">Docker</span><span class="tag">GitHub Actions</span>
+              <span class="tag">Git</span><span class="tag">Linux</span>
+              <span class="tag">Render</span><span class="tag">Neon</span>
+              <span class="tag">Upstash</span><span class="tag">Netlify</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Testing</h3>
+            <div class="tags">
+              <span class="tag">JUnit 5</span><span class="tag">Mockito</span>
+              <span class="tag">AssertJ</span><span class="tag">MockMvc</span>
+              <span class="tag">Postman</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>AI &amp; CS Fundamentals</h3>
+            <div class="tags">
+              <span class="tag">LangChain4j</span><span class="tag">RAG</span>
+              <span class="tag">Embeddings</span><span class="tag">Vector Search</span>
+              <span class="tag">DSA</span><span class="tag">OOP</span>
+              <span class="tag">Design Patterns</span><span class="tag">Concurrency</span>
+              <span class="tag">DBMS</span><span class="tag">OS</span><span class="tag">Networks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="num mono">03.</span> Projects</h2>
+        <div class="projects">
+
+          <article class="card project reveal">
+            <div class="project-head">
+              <div>
+                <h3>Shortly – Production URL Shortener</h3>
+                <p class="sub mono">Java 21 · Spring Boot 3.5 · PostgreSQL · Redis · React 19 · Docker · GitHub Actions</p>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/EshantSethi/shortly" target="_blank" rel="noopener">GitHub ↗</a>
+                <a href="https://frontend-seven-rosy-23.vercel.app" target="_blank" rel="noopener">Live Demo ↗</a>
+              </div>
+            </div>
+            <ul>
+              <li>Full-stack URL shortener serving <b>live traffic</b>: Spring Boot API on Render, React frontend on Vercel, PostgreSQL on Neon, Redis on Upstash.</li>
+              <li><b>5 REST endpoints</b>: custom aliases, link expiry and QR code generation, with global exception handling.</li>
+              <li><b>Redis cache-aside</b> with TTL eviction gives redirects under 10ms and cuts PostgreSQL reads by about 70%.</li>
+              <li><b>Rate limiting built from scratch</b> (sliding window, per IP). Found and fixed a race condition in concurrent map eviction.</li>
+            </ul>
+            <div class="highlight-row">
+              <span class="hl">&lt;10ms cached redirects</span>
+              <span class="hl">~70% fewer DB reads</span>
+              <span class="hl">CI/CD + Docker</span>
+            </div>
+
+            <button class="story-btn" aria-expanded="false" aria-controls="story-shortly">Read the story <span class="chev">▾</span></button>
+            <div class="story" id="story-shortly">
+              <div class="story-inner">
+                <div class="story-grid">
+                  <div class="flow">
+                    <span class="node">React (Vercel)</span><span class="to">→</span>
+                    <span class="node">Spring Boot API (Render)</span><span class="to">→</span>
+                    <span class="node hot">Redis cache (Upstash)</span><span class="to">→</span>
+                    <span class="node">PostgreSQL (Neon)</span>
+                  </div>
+                  <div class="story-block">
+                    <h4>The problem</h4>
+                    <p>Long links are hard to share. A short-link service has to redirect very fast and handle a lot of traffic, but hitting the database on every click would make it slow and costly.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>What I built</h4>
+                    <p>A full-stack shortener with 5 REST endpoints (custom alias, link expiry, QR codes) and click tracking in PostgreSQL. Popular links are kept in <b>Redis</b>, so most redirects never touch the database. It ships through <b>GitHub Actions</b> and <b>Docker</b>.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>Hardest challenge</h4>
+                    <p>I wrote my own <b>rate limiter</b> (a sliding window per IP). Under load, some requests failed at random. I traced it to a <b>race condition</b>: old entries were being removed from a shared map while other threads were still using them. I fixed the removal logic so it's safe when many requests run at once.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>Result</h4>
+                    <ul>
+                      <li>Cached redirects in <b>under 10ms</b></li>
+                      <li><b>~70% fewer</b> database reads</li>
+                      <li>Limits of 20 writes and 60 reads per minute per IP</li>
+                      <li>Live and serving real traffic</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project reveal">
+            <div class="project-head">
+              <div>
+                <h3>InsightRAG – RAG Backend in Java</h3>
+                <p class="sub mono">Java 21 · Spring Boot 3.3 · LangChain4j · PostgreSQL (pgvector) · BM25 · Docker · JUnit 5</p>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/EshantSethi/InsightRAG" target="_blank" rel="noopener">GitHub ↗</a>
+              </div>
+            </div>
+            <ul>
+              <li>Modular <b>RAG backend</b> with a REST API, in-process embeddings, pgvector storage, intent routing and a read-only SQL tool.</li>
+              <li><b>Hybrid search</b> (vectors + BM25 built from scratch) combined with Reciprocal Rank Fusion and re-ranking.</li>
+              <li><b>Abstention gate</b> and grounding checks cut confident hallucinations from <b>7 to 0</b>.</li>
+              <li>Covered by <b>33 JUnit 5 tests</b>, with per-query tracing, Docker and GitHub Actions CI.</li>
+            </ul>
+            <div class="highlight-row">
+              <span class="hl">Precision 0.25 → 0.58</span>
+              <span class="hl">MRR 0.72 → 1.00</span>
+              <span class="hl">Hallucinations 7 → 0</span>
+            </div>
+
+            <button class="story-btn" aria-expanded="false" aria-controls="story-rag">Read the story <span class="chev">▾</span></button>
+            <div class="story" id="story-rag">
+              <div class="story-inner">
+                <div class="story-grid">
+                  <div class="flow">
+                    <span class="node">Question</span><span class="to">→</span>
+                    <span class="node">Intent router</span><span class="to">→</span>
+                    <span class="node hot">Vectors + BM25</span><span class="to">→</span>
+                    <span class="node">RRF + re-rank</span><span class="to">→</span>
+                    <span class="node hot">Abstention gate</span><span class="to">→</span>
+                    <span class="node">Answer</span>
+                  </div>
+                  <div class="story-block">
+                    <h4>The problem</h4>
+                    <p>AI models often give confident answers even when they're wrong. I wanted a Java backend that answers only from real documents, and says "I don't know" when it isn't sure.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>What I built</h4>
+                    <p>A modular <b>Spring Boot</b> RAG service. It stores document embeddings in <b>pgvector</b>, routes each question by intent, and can also run a safe, read-only SQL tool. Each part is a separate, reusable component.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>Hardest challenge</h4>
+                    <p>Vector search alone often found the wrong chunks (precision was only 0.25), and the model made up answers in 7 of 25 test cases. I wrote <b>BM25 keyword search from scratch</b>, merged it with vector results using <b>Reciprocal Rank Fusion</b>, and added a gate that checks both confidence and keyword coverage before answering.</p>
+                  </div>
+                  <div class="story-block">
+                    <h4>Result</h4>
+                    <ul>
+                      <li>Precision <b>0.25 → 0.58</b></li>
+                      <li>MRR <b>0.72 → 1.00</b></li>
+                      <li>Hallucinations <b>7 → 0</b>, with no over-cautious refusals</li>
+                      <li><b>33 JUnit tests</b> and a 25-case evaluation harness</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project reveal">
+            <div class="project-head">
+              <div>
+                <h3>This Portfolio – Hosted on Netlify</h3>
+                <p class="sub mono">HTML · CSS · JavaScript · GitHub · Netlify (PaaS) · CDN</p>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/EshantSethi/portfolio" target="_blank" rel="noopener">GitHub ↗</a>
+              </div>
+            </div>
+            <ul>
+              <li>A responsive, interactive portfolio built with plain HTML, CSS and JavaScript (no frameworks).</li>
+              <li>Deployed on <b>Netlify</b> from GitHub: every push goes live automatically, served worldwide through a CDN with free HTTPS.</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience & Education -->
+    <section id="experience">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="num mono">04.</span> Experience &amp; Education</h2>
+        <div class="timeline">
+          <div class="card t-item reveal">
+            <div>
+              <h3>Web Development Intern</h3>
+              <div class="org"><a href="https://asf.org.in" target="_blank" rel="noopener">Aapke Saath Foundation</a></div>
+            </div>
+            <div class="date">Jun 2025</div>
+            <ul>
+              <li>Shipped the live donation flow on WordPress with the Razorpay payments API.</li>
+              <li>Built the donor form for 80G tax receipts and made pages mobile-friendly.</li>
+            </ul>
+          </div>
+          <div class="card t-item reveal">
+            <div>
+              <h3>Corporate Lead</h3>
+              <div class="org">ACM SIGKDD SRMIST KTR Student Chapter</div>
+            </div>
+            <div class="date">Mar 2024 – Present</div>
+            <ul>
+              <li>Built and maintained the chapter's event registration platform. It handled 100+ signups with zero downtime.</li>
+            </ul>
+          </div>
+          <div class="card t-item reveal">
+            <div>
+              <h3>B.Tech, Computer Science and Engineering</h3>
+              <div class="org">SRM Institute of Science and Technology, Kattankulathur</div>
+            </div>
+            <div class="date">2023 – May 2027 · CGPA 8.67</div>
+          </div>
+          <div class="card t-item reveal">
+            <div>
+              <h3>Class XII (PCM + CS) · Class X</h3>
+              <div class="org">SR International School, Bareilly</div>
+            </div>
+            <div class="date">76% (2022) · 94.6% (2020)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications">
+      <div class="container reveal">
+        <h2 class="section-title"><span class="num mono">05.</span> Certifications &amp; Publications</h2>
+        <div class="cert-grid">
+          <div class="card cert">
+            <div class="icon">☁️</div>
+            <h3>AWS Certified CloudOps Engineer – Associate</h3>
+            <p>Amazon Web Services</p>
+          </div>
+          <div class="card cert">
+            <div class="icon">🤖</div>
+            <h3>Azure AI Fundamentals (AI-900)</h3>
+            <p>Microsoft · <a href="https://learn.microsoft.com/api/credentials/share/en-in/EshantSethi-3815/C60775E9969515E6?sharingId=8E7A64007E9BB91F" target="_blank" rel="noopener">Verify ↗</a></p>
+          </div>
+          <div class="card cert">
+            <div class="icon">💻</div>
+            <h3>GitHub Copilot Certification</h3>
+            <p>Microsoft</p>
+          </div>
+          <div class="card cert">
+            <div class="icon">🎓</div>
+            <h3>NPTEL (IIT)</h3>
+            <p>Machine Learning · Database Systems</p>
+          </div>
+          <div class="card cert">
+            <div class="icon">🥋</div>
+            <h3>State-Level Taekwondo</h3>
+            <p>Sports achievement</p>
+          </div>
+        </div>
+        <div class="card pub">
+          <h3>📄 Publication</h3>
+          <p>
+            <b style="color: var(--text)">Real-Time Water Quality Index Prediction Using Arduino-Based IoT Sensors and AI Techniques</b><br />
+            ICIVC 2026, ICFAI University Dehradun · SCRS Computing and Intelligent Systems (ISSN 3048-5649)
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="container reveal">
+        <h2 class="section-title"><span class="num mono">06.</span> Get In Touch</h2>
+        <p>
+          I'm looking for Software Development Engineer (SDE) and backend roles.
+          If you have an opportunity or just want to connect, feel free to reach out!
+        </p>
+        <div class="btns">
+          <a href="mailto:eshantsethi012@gmail.com" class="btn btn-primary">✉️ Email Me</a>
+          <button type="button" class="btn btn-outline" id="copyEmail">Copy Email</button>
+          <a href="Eshant_Sethi_Resume.pdf" download class="btn btn-outline">Download Resume <span class="arrow down">↓</span></a>
+          <a href="https://www.linkedin.com/in/eshant-sethi" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+          <a href="https://github.com/EshantSethi" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+        </div>
+        <div class="copy-note" id="copyNote" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Eshant Sethi · Built with HTML, CSS &amp; JS · <span class="cloud">☁️ Hosted on Netlify</span></p>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top">↑</button>
+
+  <script>
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const NAV_H = 64;
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
+
+    // Smooth scroll for all "#section" links (works everywhere, even when opened as a local file)
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        navLinks.classList.remove("open");
+        const id = link.getAttribute("href").slice(1);
+        const target = id ? document.getElementById(id) : null;
+        const top = target ? target.getBoundingClientRect().top + window.scrollY - NAV_H : 0;
+        window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+
+    // Typing effect in the hero title
+    const typedEl = document.getElementById("typed");
+    const phrases = [
+      "REST APIs with Spring Boot.",
+      "fast caches with Redis.",
+      "RAG systems in Java.",
+      "backend services that scale."
+    ];
+    if (!reduceMotion) {
+      let p = 0, i = 0, deleting = false;
+      typedEl.textContent = "";
+      (function type() {
+        const word = phrases[p];
+        i += deleting ? -1 : 1;
+        typedEl.textContent = word.slice(0, i);
+        let delay = deleting ? 35 : 70;
+        if (!deleting && i === word.length) { deleting = true; delay = 1600; }
+        else if (deleting && i === 0) { deleting = false; p = (p + 1) % phrases.length; delay = 300; }
+        setTimeout(type, delay);
+      })();
+    }
+
+    // Count-up numbers
+    function countUp(el) {
+      const target = parseFloat(el.dataset.count);
+      const dec = parseInt(el.dataset.decimals || "0", 10);
+      const pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+      if (reduceMotion) { el.textContent = pre + target.toFixed(dec) + suf; return; }
+      const start = performance.now(), dur = 1400;
+      (function step(now) {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = pre + (target * eased).toFixed(dec) + suf;
+        if (t < 1) requestAnimationFrame(step);
+      })(start);
+    }
+
+    // Reveal sections on scroll + start counters when visible
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        entry.target.querySelectorAll("[data-count]").forEach(countUp);
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    // Scroll progress bar, back-to-top button, active menu link
+    const progress = document.getElementById("progress");
+    const toTop = document.getElementById("toTop");
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const menuLinks = [...navLinks.querySelectorAll("a")];
+    function onScroll() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+      toTop.classList.toggle("show", window.scrollY > 500);
+      let current = "";
+      sections.forEach(s => { if (s.getBoundingClientRect().top <= NAV_H + 120) current = s.id; });
+      if (window.scrollY >= max - 2 && sections.length) current = sections[sections.length - 1].id;
+      menuLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+
+    // Ripple effect on buttons
+    document.querySelectorAll(".btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        if (reduceMotion) return;
+        const r = btn.getBoundingClientRect();
+        const size = Math.max(r.width, r.height);
+        const s = document.createElement("span");
+        s.className = "ripple";
+        s.style.width = s.style.height = size + "px";
+        s.style.left = (e.clientX - r.left - size / 2) + "px";
+        s.style.top = (e.clientY - r.top - size / 2) + "px";
+        btn.appendChild(s);
+        setTimeout(() => s.remove(), 600);
+      });
+    });
+
+    // Project cards tilt toward the mouse (desktop only)
+    if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+      document.querySelectorAll(".project").forEach(card => {
+        card.addEventListener("mousemove", e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(900px) rotateX(${(-y * 3).toFixed(2)}deg) rotateY(${(x * 3).toFixed(2)}deg) translateY(-3px)`;
+        });
+        card.addEventListener("mouseleave", () => { card.style.transform = ""; });
+      });
+    }
+
+    // "Read the story" toggles
+    document.querySelectorAll(".story-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const panel = document.getElementById(btn.getAttribute("aria-controls"));
+        const open = btn.getAttribute("aria-expanded") !== "true";
+        btn.setAttribute("aria-expanded", String(open));
+        panel.classList.toggle("open", open);
+        btn.firstChild.textContent = open ? "Hide the story " : "Read the story ";
+      });
+    });
+
+    // Copy email button
+    const email = "eshantsethi012@gmail.com";
+    const copyNote = document.getElementById("copyNote");
+    document.getElementById("copyEmail").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(email);
+      } catch {
+        const t = document.createElement("textarea");
+        t.value = email; document.body.appendChild(t); t.select();
+        document.execCommand("copy"); t.remove();
+      }
+      copyNote.textContent = "Copied ✓ " + email;
+      setTimeout(() => (copyNote.textContent = ""), 2500);
+    });
+
+    // Current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
